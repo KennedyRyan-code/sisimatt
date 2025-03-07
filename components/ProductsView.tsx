@@ -8,17 +8,18 @@ interface ProductsViewProps {
 
 const ProductsView = ({ products, categories }: ProductsViewProps) => {
     return (
-        <div className="flex flex-col">
+        <div>
             {/* categories */}
             <div className="w-full sm:w-[200px]">
                 {/* <CategortySelectionComponent categories={categories} /> */}
             </div>
             {/* products */}
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+            <div>
+                <h2 className="text-2xl font-bold">All Products</h2>
                 <div>
                     <ProductGrid products={products} />
 
-                    <hr className="w-1/2 sm:w-3/4 my-4" />
+                    <hr className="w-1/2 sm:w-3/4"/>
                 </div>
             </div>
         </div>
