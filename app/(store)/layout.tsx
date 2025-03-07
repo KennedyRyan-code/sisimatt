@@ -4,6 +4,7 @@ import Header from "@/components/Header";
 import {
   ClerkProvider
 } from '@clerk/nextjs'
+import { SanityLive } from "@/sanity/lib/live";
 
 
 
@@ -23,6 +24,7 @@ export default function RootLayout({
       <body>
         <Header />
         <main>{children}</main>
+        <SanityLive />
       </body>
     </html>
     </ClerkProvider>
