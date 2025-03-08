@@ -57,7 +57,7 @@ function Header() {
                         <div className='flex item-center space-x-2'>
                             <UserButton />
                             <div className='hidden sm:block text-xs'>
-                                <p className='text-gray-400'>Wellcom Back</p>
+                                <p className='text-gray-400'>Welcome Back</p>
                                 <p className='font-bold'>{user.fullName}</p>
                             </div>
                         </div>
