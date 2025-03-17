@@ -39,7 +39,7 @@ function Header() {
 
                 {/* Mobile menu button */}
                 <div className='sm:hidden flex items-center'>
-                    <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className='text-blue-500 hover:opacity-50'>
+                    <button onClick={() => setIsMobileMenuOpen((prev) => !prev) } className='text-blue-500 hover:opacity-50'>
                         {isMobileMenuOpen ? <XMarkIcon className='w-6 h-6' /> : <Bars3Icon className='w-6 h-6' />}
                     </button>
                 </div>
