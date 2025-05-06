@@ -19,7 +19,8 @@ export function CategorySelector({ categories }: CategorySelectorProps) {
     const [value, setValue] = useState<string | null>("");
     const router = useRouter();
 
-    <Popover open={open} onOpenChange={setOpen}>
+    return (
+        <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
             <Button variant="outline" role="combobox" aria-expanded={open} className="w-[200px] justify-start text-left font-normal">
                 {value ? categories.find((category) => category._id === value)?.title : "Filter by category"}
@@ -65,4 +66,7 @@ export function CategorySelector({ categories }: CategorySelectorProps) {
 
         </PopoverContent>
     </Popover>
+
+    )
+
 }
