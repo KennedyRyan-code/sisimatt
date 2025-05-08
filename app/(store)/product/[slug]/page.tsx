@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import React from 'react'
 import { getProductBySlug } from '@/sanity/lib/products/getProductBySlug';
 import { PortableText } from 'next-sanity';
+import { Button } from '@/components/ui/button';
 
 
 async function ProductPage({ params, }: { params: Promise<{ slug: string }>; }) { // Add type for params
@@ -47,7 +48,9 @@ async function ProductPage({ params, }: { params: Promise<{ slug: string }>; }) 
                         <PortableText value={product.description} />
                     )}
                 </div>
-                
+                <div className='mt-6'>
+                    <Button>Add to Cart</Button>
+                </div>
             </div>
         </div>
     </div>
