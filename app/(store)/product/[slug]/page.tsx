@@ -5,6 +5,7 @@ import React from 'react'
 import { getProductBySlug } from '@/sanity/lib/products/getProductBySlug';
 import { PortableText } from 'next-sanity';
 import { Button } from '@/components/ui/button';
+import AddToCartButton from '@/components/AddToCartButton';
 
 
 async function ProductPage({ params, }: { params: Promise<{ slug: string }>; }) { // Add type for params
@@ -49,7 +50,7 @@ async function ProductPage({ params, }: { params: Promise<{ slug: string }>; }) 
                     )}
                 </div>
                 <div className='mt-6'>
-                    <Button>Add to Cart</Button>
+                    <AddToCartButton product={product} disabled={isOutOfStock}/>
                 </div>
             </div>
         </div>
