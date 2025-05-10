@@ -11,7 +11,7 @@ interface AddToCartButtonProps {
 
 function AddToCartButton({product, disabled }: AddToCartButtonProps) {
   const { addItem, removeItem, getItemCount } = useCartStore();
-  const ItemCount = getItemCount(product._id);
+  const itemCount = getItemCount(product._id);
 
   const [isClient, setIsClient] = useState(false);
   // use useEffect to set isClient to true after the component mounts
@@ -28,7 +28,17 @@ function AddToCartButton({product, disabled }: AddToCartButtonProps) {
 
   return (
     <div className="flex items-center justify-center space-x-2">
-      <span className="w-8 text-center font-semibold">{ItemCount}</span>
+      <button
+        onClick={() => removeItem(product._id)}
+        disabled={itemCount === 0 || disabled}
+        className={`flex items-center justify-center w-8 h-8 rounded-full transition-colors duration-200 ease-in-out ${itemCount === 0 ? 'bg-gray-100 cursor-not-allowed' : 'bg-gray-200 hover:bg-gray-300'}`}
+        >
+
+        <span className={`text-xl font-bold ${itemCount === 0 ? 'text-gray-400' : 'text-gray-500'}`}>
+          -
+        </span>
+      </button>
+      <span className="w-8 text-center font-semibold">{itemCount}</span>
     </div>
   )
 }
