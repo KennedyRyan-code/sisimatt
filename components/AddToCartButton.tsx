@@ -39,6 +39,15 @@ function AddToCartButton({product, disabled }: AddToCartButtonProps) {
         </span>
       </button>
       <span className="w-8 text-center font-semibold">{itemCount}</span>
+      <button
+        onClick={() => addItem(product)}
+        disabled={disabled}
+        className={`flex items-center justify-center w-8 h-8 rounded-full transition-colors duration-200 ease-in-out ${disabled ? 'bg-gray-100 cursor-not-allowed' : 'bg-blue-400 hover:bg-blue-500'}`}
+        >
+        <span className={`text-white font-bold ${disabled ? 'text-gray-400' : 'text-white'}`}>
+          +
+        </span>
+      </button>
     </div>
   )
 }
