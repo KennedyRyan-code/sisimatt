@@ -5,10 +5,13 @@ import Link from 'next/link';
 import Form from 'next/form';
 import { PackageIcon, TrolleyIcon } from '@sanity/icons';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/20/solid';
+import useCartStore from '@/store/store';
 
 function Header() {
     const { user } = useUser();
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+    const itemCount = useCartStore((state) => state.items.reduce((total, item) => total + item.quantity, 0));
 
     const createClerkPasskey = async () => {
         try {
@@ -49,8 +52,14 @@ function Header() {
                 </Form>
                     <Link href='/cart' className='flex-1 relative flex justify-center sm:justify-start sm:flex-none items-center space-x-2 text-white font-bold bg-blue-500 hover:bg-blue-700 hover:opacity-50 py-2 px-4 rounded cursor-pointer'>
                         <TrolleyIcon className='w-6 h-6' />
+                        {itemCount > 0 && (
+                            <span className='absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full px-2 py-1'>
+                                {itemCount}
+                            </span>
+                        )}
                         <span>Cart</span>
                     </Link>
+                    {/* User area */}
                     <ClerkLoaded>
                         {user && (
                             <Link
