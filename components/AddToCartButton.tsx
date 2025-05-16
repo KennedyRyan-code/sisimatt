@@ -1,7 +1,6 @@
 "use client";
 import { Product } from "@/sanity.types";
 import useCartStore from "@/store/store";
-import { get } from "http";
 import { useEffect, useState } from "react";
 
 interface AddToCartButtonProps {
