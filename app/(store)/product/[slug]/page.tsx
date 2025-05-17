@@ -4,7 +4,6 @@ import { notFound } from 'next/navigation';
 import React from 'react'
 import { getProductBySlug } from '@/sanity/lib/products/getProductBySlug';
 import { PortableText } from 'next-sanity';
-import { Button } from '@/components/ui/button';
 import AddToCartButton from '@/components/AddToCartButton';
 
 
