@@ -17,7 +17,7 @@ function CartPage() {
     const [isClient, setIsClient] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
-    if (groupedItems.length === 0) {
+    if (!groupedItems || groupedItems.length === 0) {
         return (
             <div className="container mx-auto flex flex-col items-center justify-center h-screen">
                 <h1 className="text-2xl font-bold mb-6 text-gray-800">Your cart</h1>
