@@ -1,5 +1,6 @@
 'use client'
 
+import AddToCartButton from "@/components/AddToCartButton";
 import useCartStore from "@/store/store"
 import { useAuth, useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
@@ -32,10 +33,12 @@ function CartPage() {
         <div className="flex flex-col gap-8 lg:flex-row">
             <div className="flex-grow">
                 {groupedItems?.map((item) => (
-                    <div key={item.product._id}>
+                    <div key={item.product._id} className="mb-4 p-4 border rounded flex item-center justify-between">
                         <div>{item.product.name}</div>
-                        <div>{item.product.price}</div>
-                        <div>{item.quantity}</div>
+                        <div className="flex items-center ml-4 flex-shrink-0">
+                            <AddToCartButton product={item.product}/>
+
+                        </div>
                     </div>
                 ))}
             </div>
