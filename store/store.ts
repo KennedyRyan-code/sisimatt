@@ -23,7 +23,7 @@ const useCartStore = create<CartState>()(
     persist(
         (set, get) => ({
             items: [],
-            addItem: (product: Product) => {
+            addItem: (product) => {
                 set((state) => {
                     const existingItem = state.items.find((item) => item.product._id === product._id);
                     if (existingItem) {
@@ -39,7 +39,7 @@ const useCartStore = create<CartState>()(
                     }
                 });
             },
-            removeItem: (productId: string) => {
+            removeItem: (productId) => {
                 set((state) => ({
                     items: state.items.reduce((acc, item) => {
                         if (item.product._id === productId) {
@@ -55,20 +55,9 @@ const useCartStore = create<CartState>()(
                 }));
             },
             clearCart: () => set({ items: [] }),
-            getItemCount: (productId: string) => {
+            getItemCount: (productId) => {
                 const item = get().items.find((item) => item.product._id === productId);
                 return item ? item.quantity : 0;
-            },
-            getGroupedItems: () => {
-                const groupedItems: { [key: string]: CartItem } = {};
-                get().items.forEach((item) => {
-                    if (groupedItems[item.product._id]) {
-                        groupedItems[item.product._id].quantity += item.quantity;
-                    } else {
-                        groupedItems[item.product._id] = item;
-                    }
-                });
-                return Object.values(groupedItems);
             },
             getTotalPrice: () => {
                 return get().items.reduce((total, item) => 
@@ -82,6 +71,7 @@ const useCartStore = create<CartState>()(
             isEmpty: () => {
                 return get().items.length === 0;
             },
+            getGroupedItems: () => get().items,
                 }),
         {
                 name: "cart-storage", // unique name for the storage (must be unique across all stores)
