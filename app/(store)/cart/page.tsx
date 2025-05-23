@@ -1,19 +1,16 @@
 'use client'
 
+import { createCheckoutSession, Metadata } from "@/actions/createCheckoutSession";
 import AddToCartButton from "@/components/AddToCartButton";
 import { imageUrl } from "@/sanity/lib/imageUrl";
 import useCartStore from "@/store/store"
-import { useAuth, useUser } from "@clerk/nextjs";
+import { SignInButton, useAuth, useUser } from "@clerk/nextjs";
+import { create } from "domain";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
-export type Metadata = {
-    orderNumber: string;
-    customerName: string;
-    customerEmail: string;
-    clerkUserId: string;
-}
+
 
 function CartPage() {
     const groupedItems = useCartStore((state) => state.getGroupedItems());
@@ -42,8 +39,14 @@ function CartPage() {
                 customerEmail: user?.emailAddresses[0].emailAddress ?? "Unknown",
                 clerkUserId: user!.id,
             }
+            const checkoutUrl = await createCheckoutSession(groupedItems, metadata);
+            if (typeof checkoutUrl === "string" && checkoutUrl) {
+                window.location.href = checkoutUrl;
+            }
             
         } catch (error) {
+            console.error("Error creating checkout session:", error);
+            alert("Failed to create checkout session");
             
         } finally {
             setIsLoading(false);
@@ -83,6 +86,42 @@ function CartPage() {
                             </div>
                     </div>
                 ))}
+            </div>
+            <div className="w-full lg:w-88 lg:sticky lg:top-4 h-fit bg-white p-6 boarder rounded order-first lg:order-last fixed bottom-0 left-0 lg:left-auto">
+                <h3 className="text-xl font-semibold">Order summary</h3>
+                <div className="mt-4 space-y-2">
+                    <p className="flex justify-between">
+                        <span>Items:</span>
+                        <span>
+                            {groupedItems.reduce((total, item) => total + item.quantity, 0)}
+                        </span>
+                    </p>
+                    <p className="flex justify-between text-2xl font-bold border-t pt-2">
+                        <span>Total:</span>
+                        <span>
+                            Kes {useCartStore.getState().getTotalPrice().toFixed(2)}
+                        </span>
+                    </p>
+                </div>
+                {isSignedIn ? (
+                    <button
+                        onClick={handleCheckout}
+                        disabled={isLoading}
+                        className="mt-4 w-full bg-blue-400 text-white py-2 rounded hover:bg-blue-500 disabled:bg-gray-400 transition duration-200"
+                    >
+                        {isLoading ? "Loading..." : "Checkout"}
+                    </button>
+                ) : (
+                    <SignInButton mode="modal">
+                        <button className="mt-4 w-full bg-blue-400 text-white py-2 rounded hover:bg-blue-500 transition duration-200">
+                            Sign in to checkout
+                        </button>
+                    </SignInButton>
+                )}
+            </div>
+                    {/* spacer for fixed checkout on mobile */}
+            <div className="h-64 lg:h-0">
+
             </div>
             
         </div>
