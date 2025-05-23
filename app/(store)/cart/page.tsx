@@ -2,10 +2,10 @@
 
 import { createCheckoutSession, Metadata } from "@/actions/createCheckoutSession";
 import AddToCartButton from "@/components/AddToCartButton";
+import Loader from "@/components/Loader";
 import { imageUrl } from "@/sanity/lib/imageUrl";
 import useCartStore from "@/store/store"
 import { SignInButton, useAuth, useUser } from "@clerk/nextjs";
-import { create } from "domain";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -20,6 +20,16 @@ function CartPage() {
 
     const [isClient, setIsClient] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+
+    // Check if the component is mounted on the client side
+    useEffect(() => {
+        setIsClient(true);
+    }
+    , []);
+
+    if (!isClient) {
+        return <Loader />
+    }
 
     if (!groupedItems || groupedItems.length === 0) {
         return (
@@ -109,7 +119,7 @@ function CartPage() {
                         disabled={isLoading}
                         className="mt-4 w-full bg-blue-400 text-white py-2 rounded hover:bg-blue-500 disabled:bg-gray-400 transition duration-200"
                     >
-                        {isLoading ? "Loading..." : "Checkout"}
+                        {isLoading ? "Processing..." : "Checkout"}
                     </button>
                 ) : (
                     <SignInButton mode="modal">
